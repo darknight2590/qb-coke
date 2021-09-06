@@ -184,11 +184,13 @@ AddEventHandler('qb-coke:client:processCrack', function(source)
 end)
 
 function pickProcess()
+	LocalPlayer.state:set("inv_busy", true, true)
     QBCore.Functions.Progressbar("grind_coke", "Picking Coca Leaves ..", math.random(80000,120000), false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
+	LocalPlayer.state:set("inv_busy", false, true)		
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent("qb-coke:server:getleaf")
         ClearPedTasks(PlayerPedId())
@@ -196,16 +198,19 @@ function pickProcess()
     end, function() -- Cancel
         openingDoor = false
         ClearPedTasks(PlayerPedId())
+	LocalPlayer.state:set("inv_busy", false, true)		
         QBCore.Functions.Notify("Process Canceled", "error")
     end)
 end
 
 function cokeProcess()
+	LocalPlayer.state:set("inv_busy", true, true)
     QBCore.Functions.Progressbar("grind_coke", "Process Coke Leaves ..", math.random(10000, 12000), false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
+	LocalPlayer.state:set("inv_busy", false, true)				
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent("qb-coke:server:getcoke")
         ClearPedTasks(PlayerPedId())
@@ -213,23 +218,27 @@ function cokeProcess()
     end, function() -- Cancel
         openingDoor = false
         ClearPedTasks(PlayerPedId())
+	LocalPlayer.state:set("inv_busy", false, true)				
         QBCore.Functions.Notify("Process Canceled", "error")
     end)
 end
 
 function crackProcess()
+	LocalPlayer.state:set("inv_busy", true, true)
     QBCore.Functions.Progressbar("grind_coke", "Process Crack ..", math.random(10000, 12000), false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
+	LocalPlayer.state:set("inv_busy", false, true)		
         TriggerServerEvent("qb-coke:server:getcrack")
         ClearPedTasks(PlayerPedId())
         cokepicking = false
     end, function() -- Cancel
         openingDoor = false
         ClearPedTasks(PlayerPedId())
+	LocalPlayer.state:set("inv_busy", false, true)		
         QBCore.Functions.Notify("Process Canceled", "error")
     end)
 end
